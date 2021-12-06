@@ -91,12 +91,12 @@ class BreakoutGame {
             const paddleCenter = Math.floor((paddleX + PADDLE_WIDTH) / 2);
             if (this.ball.position.x >= paddleX && (this.ball.position.x <= paddleX + PADDLE_WIDTH || this.ball.position.x <= (paddleX + PADDLE_WIDTH) % DIMS.X)) {
                 this.ball.dy = -this.ball.dy;
-                if (paddleCenter >= this.ball.position.x) {
+                if (paddleCenter <= this.ball.position.x) {
                     this.ball.dx = -this.ball.dx;
                 }
             } else if (this.ball.position.x + this.ball.dx >= paddleX && this.ball.position.x + this.ball.dx <= paddleX + PADDLE_WIDTH) {
                 this.ball.dy = -this.ball.dy;
-                if (paddleCenter >= this.ball.position.x) {
+                if (paddleCenter <= this.ball.position.x) {
                     this.ball.dx = -this.ball.dx;
                 }
             } else {
