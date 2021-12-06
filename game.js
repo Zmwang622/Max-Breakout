@@ -2,9 +2,18 @@ const maxAPI = require('max-api');
 
 const DIMS = {x: 25, y: 25}; // Game board dimensions
 const BALL_RADIUS = 1; // For wall bounce calculations
-const PADDLE_WIDTH = 7;
+const PADDLE_WIDTH = 10;
 const INITIAL_PLAT_POSITION = {x: 8, y: 24};
 const INITIAL_BALL_POSITION = {x: 12, y: 12};
+
+// Brick Shit
+const BRICK_NUM_ROW = 3;
+const BRICK_NUM_COL = 4;
+const BRICK_NUM_WID = 4;
+const BRICK_NUM_HEIGHT = 1;
+const BRICK_PADDING = 1;
+const BRICK_OFFSET_TOP = 3;
+const BRICK_OFFSET_LEFT = 3;
 
 const DIRECTIONS = Object.freeze({
     NONE: "NONE",
@@ -33,13 +42,14 @@ class BreakoutGame {
         }
 
         this.addBall();
-        // this.addTargets();
+        this.addBricks();
     }
 
     getPixels() {
         const pixels = ["pixels"];
         this.segments.forEach(segment => segment.draw(pixels));
         this.ball.draw(pixels);
+        this.bricks.forEach(row => row.forEach(brick => brick.segments.forEach(segment => segment.draw(pixels))));
         return pixels;
     }
 
@@ -47,7 +57,17 @@ class BreakoutGame {
         this.ball = new BallSegment(INITIAL_BALL_POSITION.x, INITIAL_BALL_POSITION.y);
     }
 
-    // addTargets(){}
+    addBricks(){
+        this.bricks = [];
+        
+        for (let c = 0; c < BRICK_NUM_COL; c++) {
+            let brick_row = []
+            for (let r = 0; r < BRICK_NUM_ROW; r++) {
+                brick_row.push(new Brick(c*(BRICK_NUM_WID + BRICK_PADDING) + BRICK_OFFSET_LEFT, r*(BRICK_NUM_HEIGHT + BRICK_PADDING) + BRICK_OFFSET_TOP));
+            }
+            this.bricks.push(brick_row);
+        }
+    }
 
     update() {
         if (this.state === STATES.PLAYING) {
@@ -80,6 +100,15 @@ class BreakoutGame {
             // segment.hidden = this.blinkTimer >= 4;
         // });
         this.ball.hidden = this.blinkTimer >= 4;
+    }
+}
+
+class Brick {
+    constructor (x, y) {
+        this.segments = [];
+        for (let i = 0; i < BRICK_NUM_WID; i++) {
+            this.segments.push(new DrawablePixel(x+i,y));
+        }
     }
 }
 
