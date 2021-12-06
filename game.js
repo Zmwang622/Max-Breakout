@@ -2,14 +2,19 @@ const maxAPI = require('max-api');
 
 const DIMS = {x: 25, y: 25}; // Game board dimensions
 const BALL_RADIUS = 1; // For wall bounce calculations
-const INITIAL_SEGMENTS = 4;
-const INITIAL_PLAT_POSITION = {x: 8, y: 22};
+const INITIAL_SEGMENTS = 7;
+const INITIAL_PLAT_POSITION = {x: 8, y: 24};
 const INITIAL_BALL_POSITION = {x: 12, y: 12};
 
 const DIRECTIONS = Object.freeze({
     NONE: "NONE",
     LEFT: "LEFT",
     RIGHT: "RIGHT"
+});
+
+const STATES = Object.freeze({
+    PLAYING: "PLAYING",
+    GAME_OVER: "GAME_OVER"
 });
 
 class BreakoutGame {
@@ -19,7 +24,9 @@ class BreakoutGame {
     }
 
     initializeGame() {
+        this.state = STATES.PLAYING;
         this.segments = [];
+        this.blinkTimer = 0;
 
         for (let i = 0; i < INITIAL_SEGMENTS; i++) {
             this.segments.push(new PlatformSegment(INITIAL_PLAT_POSITION.x + i, INITIAL_PLAT_POSITION.y));
@@ -43,13 +50,31 @@ class BreakoutGame {
     // addTargets(){}
 
     update() {
+        if (this.state === STATES.PLAYING) {
+            this._updatePlaying();
+        } else if (this.state === STATES.GAME_OVER) {
+            this._updateGameOver();
+        }
+    }
+
+    _updatePlaying() {
         const segments = this.segments;
         segments.forEach(segment => segment.update(this.dims))
         this.ball.update(this.dims);
 
-        // for (let i = segments.length - 1; i > 0; i--) {
-        //     // check if game over here
-        // }
+        if (this.ball.position.y + this.ball.dy > this.dims.y - BALL_RADIUS) {
+            this.state = STATES.GAME_OVER;
+            this.ball.dy = 0;
+            this.ball.dx = 0;
+        }
+    }
+
+    _updateGameOver() {
+        this.blinkTimer = (this.blinkTimer + 1) % 8;
+        this.segments.forEach(segment => {
+            segment.hidden = this.blinkTimer >= 4;
+        });
+        this.ball.hidden = this.blinkTimer >= 4;
     }
 }
 
@@ -109,15 +134,15 @@ class BallSegment extends DrawablePixel {
     }
 
     update(dims) {
-        if (this.position.y + this.dy < 0 || 
-                this.position.y + this.dy > dims.y - BALL_RADIUS) {
-            this.dy = -this.dy;
-        }
-
         if ((this.position.x + this.dx) < 0 || 
                 this.position.x + this.dx > dims.x - BALL_RADIUS) {
             this.dx = -this.dx;
         }
+
+        if (this.position.y + this.dy < 0) {
+            this.dy = -this.dy;
+        } 
+        
         this.position.x += this.dx
         this.position.y += this.dy
     }
@@ -132,10 +157,13 @@ maxAPI.addHandlers({
     },
     input: (d) => {
         if (!DIRECTIONS.hasOwnProperty(d)) {
-            maxAPI.post(`Invalid input to snake game {d}`, maxAPI.POST_LEVELS.WARN); 
+            maxAPI.post(`Invalid input to snake game ${d}`, maxAPI.POST_LEVELS.WARN); 
         } else {
-            maxAPI.post(d);
-            game.segments.forEach(segment => segment.direction = d)
+            if (game.state === STATES.GAME_OVER) {
+                game.initializeGame();
+            } else {
+                game.segments.forEach(segment => segment.direction = d);
+            }
         }
     },
     update: () => {
