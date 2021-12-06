@@ -15,13 +15,17 @@ class BreakoutGame {
 const game = new BreakoutGame();
 
 maxAPI.addHandlers({
+    getPixels: () => {},
     input: (d) => {
         if (!DIRECTIONS.hasOwnProperty(d)) {
             maxAPI.post(`Invalid input to snake game {d}`, maxAPI.POST_LEVELS.WARN);   
         } else {
             maxAPI.post(d);
         }
-    }
+    },
+    update: () => {
+        maxAPI.post("doot");
+    },
 });
 
 game.initializeGame();
