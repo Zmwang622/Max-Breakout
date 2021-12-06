@@ -2,7 +2,7 @@ const maxAPI = require('max-api');
 
 const DIMS = {x: 25, y: 25}; // Game board dimensions
 const BALL_RADIUS = 1; // For wall bounce calculations
-const INITIAL_SEGMENTS = 7;
+const PADDLE_WIDTH = 7;
 const INITIAL_PLAT_POSITION = {x: 8, y: 24};
 const INITIAL_BALL_POSITION = {x: 12, y: 12};
 
@@ -28,7 +28,7 @@ class BreakoutGame {
         this.segments = [];
         this.blinkTimer = 0;
 
-        for (let i = 0; i < INITIAL_SEGMENTS; i++) {
+        for (let i = 0; i < PADDLE_WIDTH; i++) {
             this.segments.push(new PlatformSegment(INITIAL_PLAT_POSITION.x + i, INITIAL_PLAT_POSITION.y));
         }
 
@@ -63,17 +63,22 @@ class BreakoutGame {
         this.ball.update(this.dims);
 
         if (this.ball.position.y + this.ball.dy > this.dims.y - BALL_RADIUS) {
-            this.state = STATES.GAME_OVER;
-            this.ball.dy = 0;
-            this.ball.dx = 0;
+            const paddleX = segments[0].position.x;
+            if (this.ball.position.x > paddleX && this.ball.position.x < paddleX + PADDLE_WIDTH ) {
+                this.ball.dy = -this.ball.dy;
+            } else {
+                this.state = STATES.GAME_OVER;
+                this.ball.dy = 0;
+                this.ball.dx = 0;
+            }
         }
     }
 
     _updateGameOver() {
         this.blinkTimer = (this.blinkTimer + 1) % 8;
-        this.segments.forEach(segment => {
-            segment.hidden = this.blinkTimer >= 4;
-        });
+        // this.segments.forEach(segment => {
+            // segment.hidden = this.blinkTimer >= 4;
+        // });
         this.ball.hidden = this.blinkTimer >= 4;
     }
 }
