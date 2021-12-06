@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ -2526.0, -89.0, 2492.0, 1289.0 ],
+		"rect" : [ -2526.0, -89.0, 2098.0, 1289.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -39,6 +39,18 @@
 		"subpatcher_template" : "",
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-60",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 428.25026547908783, 86.500501871109009, 63.0, 22.0 ],
+					"text" : "script stop"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"color" : [ 0.152941176470588, 0.325490196078431, 0.815686274509804, 1.0 ],
 					"id" : "obj-57",
@@ -69,8 +81,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 718.644084930419922, 107.630677642822263, 63.0, 22.0 ],
-					"text" : "metro 100"
+					"patching_rect" : [ 718.644084930419922, 107.630677642822263, 56.0, 22.0 ],
+					"text" : "metro 50"
 				}
 
 			}
@@ -239,7 +251,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 457.157656989097632, 522.883216419219934, 78.0, 22.0 ],
+					"patching_rect" : [ 446.140707573890722, 617.798472919464075, 78.0, 22.0 ],
 					"text" : "r gamePixels"
 				}
 
@@ -302,7 +314,6 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-17",
@@ -469,7 +480,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 457.157656989097632, 567.374345804382301, 87.0, 22.0 ],
+					"patching_rect" : [ 446.140707573890722, 662.289602304626442, 87.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -488,7 +499,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "jit_matrix", "" ],
-					"patching_rect" : [ 457.157656989097632, 614.579806380271975, 475.802605509757996, 263.320047378540039 ]
+					"patching_rect" : [ 446.140707573890722, 709.495062880516116, 475.802605509757996, 263.320047378540039 ]
 				}
 
 			}
@@ -507,7 +518,7 @@
 					"numoutlets" : 1,
 					"offset" : [ 0.0, 0.0 ],
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 343.448471727371214, 235.739831781387352, 277.966098785400447, 203.050847053527832 ],
+					"patching_rect" : [ 337.288472919464084, 261.163561201095604, 565.254241228103638, 303.050849437713623 ],
 					"viewvisibility" : 1
 				}
 
@@ -684,6 +695,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-57", 0 ],
 					"source" : [ "obj-56", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-1", 0 ],
+					"source" : [ "obj-60", 0 ]
 				}
 
 			}

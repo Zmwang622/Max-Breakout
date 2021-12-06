@@ -1,5 +1,6 @@
 const maxAPI = require('max-api');
 
+const DEFAULT_DIMS = {x: 25, y: 25}; // Game board dimensions
 const INITIAL_SEGMENTS = 4;
 const INITIAL_POSITION = {x: 21, y: 22};
 
@@ -11,6 +12,7 @@ const DIRECTIONS = Object.freeze({
 
 class BreakoutGame {
     constructor() {
+        this.dims = Object.assign({}, DEFAULT_DIMS);
         this.initializeGame();
     }
 
@@ -18,9 +20,9 @@ class BreakoutGame {
         this.segments = [];
 
         for (let i = 0; i < INITIAL_SEGMENTS; i++) {
-            this.segments.push(new SnakeSegment(INITIAL_POSITION.x + i, INITIAL_POSITION.y));
+            this.segments.push(new PlatformSegment(INITIAL_POSITION.x + i, INITIAL_POSITION.y));
         }
-        this.addTargets();
+        // this.addTargets();
     }
 
     getPixels() {
@@ -29,12 +31,19 @@ class BreakoutGame {
         return pixels
     }
 
-    addTargets(){}
+    // addTargets(){}
 
     update() {
-        // const segments = this.segments;
-        // const segments = this.segments;
-        // segments.forEach(segment => segment.update(this.dims))
+        const segments = this.segments;
+        segments.forEach(segment => segment.update(this.dims))
+
+        // for (let i = segments.length - 1; i > 0; i--) {
+        //     const this_segment = segments[i];
+        //     const next_segment = segments[i-1];
+        //     this_segment.direction = next_segment.direction;
+            
+        //     // check if game over here
+        // }
         
         // if (this.state === STATES.PLAYING) {
 		// 	this._updatePlaying();
@@ -44,10 +53,19 @@ class BreakoutGame {
     }
 }
 
-class SnakeSegment {
+class PlatformSegment {
     constructor(x, y) {
         this.position = { x, y };
         this._hidden = false;
+        this._direction = DIRECTIONS.NONE;
+    }
+
+    get direction() {
+        return this._direction;
+    }
+
+    set direction(d) {
+        this._direction = d;
     }
 
     draw(pixelList) {
@@ -55,6 +73,17 @@ class SnakeSegment {
            pixelList.push(this.position.x);
            pixelList.push(this.position.y);
        } 
+    }
+
+    update(dims) {
+        if (this._direction == DIRECTIONS.LEFT) {
+            this.position.x -= 1;
+        } else if (this._direction == DIRECTIONS.RIGHT) {
+            this.position.x += 1;
+        }
+
+        this.position.x = (this.position.x + dims.x) % dims.x;
+        this.position.y = (this.position.y + dims.y) % dims.y;
     }
 }
 
@@ -67,9 +96,10 @@ maxAPI.addHandlers({
     },
     input: (d) => {
         if (!DIRECTIONS.hasOwnProperty(d)) {
-            maxAPI.post(`Invalid input to snake game {d}`, maxAPI.POST_LEVELS.WARN);   
+            maxAPI.post(`Invalid input to snake game {d}`, maxAPI.POST_LEVELS.WARN); 
         } else {
             maxAPI.post(d);
+            game.segments.forEach(segment => segment.direction = d)
         }
     },
     update: () => {
@@ -79,5 +109,3 @@ maxAPI.addHandlers({
 });
 
 game.initializeGame();
-
-// maxAPI.outlet([3,4,4,4,5,4]);
