@@ -1,6 +1,7 @@
 const maxAPI = require('max-api');
 
-const DEFAULT_DIMS = {x: 25, y: 25}; // Game board dimensions
+const DIMS = {x: 25, y: 25}; // Game board dimensions
+const BALL_RADIUS = 1; // For wall bounce calculations
 const INITIAL_SEGMENTS = 4;
 const INITIAL_PLAT_POSITION = {x: 8, y: 22};
 const INITIAL_BALL_POSITION = {x: 12, y: 12};
@@ -13,7 +14,7 @@ const DIRECTIONS = Object.freeze({
 
 class BreakoutGame {
     constructor() {
-        this.dims = Object.assign({}, DEFAULT_DIMS);
+        this.dims = Object.assign({}, DIMS);
         this.initializeGame();
     }
 
@@ -31,11 +32,12 @@ class BreakoutGame {
     getPixels() {
         const pixels = ["pixels"];
         this.segments.forEach(segment => segment.draw(pixels));
+        this.ball.draw(pixels);
         return pixels;
     }
 
     addBall() {
-        this.segments.push(new BallSegment(INITIAL_BALL_POSITION.x, INITIAL_BALL_POSITION.y));
+        this.ball = new BallSegment(INITIAL_BALL_POSITION.x, INITIAL_BALL_POSITION.y);
     }
 
     // addTargets(){}
@@ -43,6 +45,7 @@ class BreakoutGame {
     update() {
         const segments = this.segments;
         segments.forEach(segment => segment.update(this.dims))
+        this.ball.update(this.dims);
 
         // for (let i = segments.length - 1; i > 0; i--) {
         //     // check if game over here
@@ -102,10 +105,19 @@ class BallSegment extends DrawablePixel {
     constructor (x, y) {
         super(x, y);
         this.dx = 1;
-        this.dy = -1;
+        this.dy = -2;
     }
 
-    update() {
+    update(dims) {
+        if (this.position.y + this.dy < 0 || 
+                this.position.y + this.dy > dims.y - BALL_RADIUS) {
+            this.dy = -this.dy;
+        }
+
+        if ((this.position.x + this.dx) < 0 || 
+                this.position.x + this.dx > dims.x - BALL_RADIUS) {
+            this.dx = -this.dx;
+        }
         this.position.x += this.dx
         this.position.y += this.dy
     }

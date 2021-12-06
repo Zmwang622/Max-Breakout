@@ -81,8 +81,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 718.644084930419922, 107.630677642822263, 63.0, 22.0 ],
-					"text" : "metro 50"
+					"patching_rect" : [ 718.644084930419922, 107.630677642822263, 56.0, 22.0 ],
+					"text" : "metro 75"
 				}
 
 			}
