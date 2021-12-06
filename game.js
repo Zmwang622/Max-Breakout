@@ -2,7 +2,8 @@ const maxAPI = require('max-api');
 
 const DEFAULT_DIMS = {x: 25, y: 25}; // Game board dimensions
 const INITIAL_SEGMENTS = 4;
-const INITIAL_POSITION = {x: 21, y: 22};
+const INITIAL_PLAT_POSITION = {x: 8, y: 22};
+const INITIAL_BALL_POSITION = {x: 12, y: 12};
 
 const DIRECTIONS = Object.freeze({
     NONE: "NONE",
@@ -20,15 +21,21 @@ class BreakoutGame {
         this.segments = [];
 
         for (let i = 0; i < INITIAL_SEGMENTS; i++) {
-            this.segments.push(new PlatformSegment(INITIAL_POSITION.x + i, INITIAL_POSITION.y));
+            this.segments.push(new PlatformSegment(INITIAL_PLAT_POSITION.x + i, INITIAL_PLAT_POSITION.y));
         }
+
+        this.addBall();
         // this.addTargets();
     }
 
     getPixels() {
         const pixels = ["pixels"];
-        this.segments.forEach(segment => segment.draw(pixels))
-        return pixels
+        this.segments.forEach(segment => segment.draw(pixels));
+        return pixels;
+    }
+
+    addBall() {
+        this.segments.push(new BallSegment(INITIAL_BALL_POSITION.x, INITIAL_BALL_POSITION.y));
     }
 
     // addTargets(){}
@@ -38,25 +45,36 @@ class BreakoutGame {
         segments.forEach(segment => segment.update(this.dims))
 
         // for (let i = segments.length - 1; i > 0; i--) {
-        //     const this_segment = segments[i];
-        //     const next_segment = segments[i-1];
-        //     this_segment.direction = next_segment.direction;
-            
         //     // check if game over here
         // }
-        
-        // if (this.state === STATES.PLAYING) {
-		// 	this._updatePlaying();
-		// } else if (this.state === STATES.GAME_OVER) {
-		// 	this._updateGameOver();
-		// }
     }
 }
 
-class PlatformSegment {
+class DrawablePixel {
     constructor(x, y) {
         this.position = { x, y };
         this._hidden = false;
+    }
+
+    get hidden() {
+        return this._hidden;
+    }
+
+    set hidden(bool){
+        this._hidden = bool;
+    }
+
+    draw(pixelList) {
+       if (!this._hidden) {
+           pixelList.push(this.position.x);
+           pixelList.push(this.position.y);
+       } 
+    }
+}
+
+class PlatformSegment extends DrawablePixel {
+    constructor(x, y) {
+        super(x, y)
         this._direction = DIRECTIONS.NONE;
     }
 
@@ -68,22 +86,28 @@ class PlatformSegment {
         this._direction = d;
     }
 
-    draw(pixelList) {
-       if (!this._hidden) {
-           pixelList.push(this.position.x);
-           pixelList.push(this.position.y);
-       } 
-    }
-
     update(dims) {
-        if (this._direction == DIRECTIONS.LEFT) {
+        if (this._direction === DIRECTIONS.LEFT) {
             this.position.x -= 1;
-        } else if (this._direction == DIRECTIONS.RIGHT) {
+        } else if (this._direction === DIRECTIONS.RIGHT) {
             this.position.x += 1;
         }
 
         this.position.x = (this.position.x + dims.x) % dims.x;
         this.position.y = (this.position.y + dims.y) % dims.y;
+    }
+}
+
+class BallSegment extends DrawablePixel {
+    constructor (x, y) {
+        super(x, y);
+        this.dx = 1;
+        this.dy = -1;
+    }
+
+    update() {
+        this.position.x += this.dx
+        this.position.y += this.dy
     }
 }
 
