@@ -4,7 +4,7 @@ const DIMS = {x: 25, y: 25}; // Game board dimensions
 const BALL_RADIUS = 1; // For wall bounce calculations
 const PADDLE_WIDTH = 10;
 const INITIAL_PLAT_POSITION = {x: 8, y: 24};
-const INITIAL_BALL_POSITION = {x: 12, y: 12};
+const INITIAL_BALL_POSITION = {x: 11, y: 12};
 
 // Brick Shit
 const BRICK_NUM_ROW = 3;
@@ -36,6 +36,7 @@ class BreakoutGame {
         this.state = STATES.PLAYING;
         this.segments = [];
         this.blinkTimer = 0;
+        this.totalBlocks = 12;
 
         for (let i = 0; i < PADDLE_WIDTH; i++) {
             this.segments.push(new PlatformSegment(INITIAL_PLAT_POSITION.x + i, INITIAL_PLAT_POSITION.y));
@@ -54,7 +55,8 @@ class BreakoutGame {
     }
 
     addBall() {
-        this.ball = new BallSegment(INITIAL_BALL_POSITION.x, INITIAL_BALL_POSITION.y);
+        let x = Math.floor(24 * Math.random(24));
+        this.ball = new BallSegment(x, INITIAL_BALL_POSITION.y);
     }
 
     addBricks(){
@@ -81,34 +83,75 @@ class BreakoutGame {
         const segments = this.segments;
         segments.forEach(segment => segment.update(this.dims))
         this.ball.update(this.dims);
+        this.collisionDetection();
 
-        if (this.ball.position.y + this.ball.dy > this.dims.y - BALL_RADIUS) {
+        // if (this.ball.position.y + this.ball.dy > this.dims.y - BALL_RADIUS) {
+        if (this.ball.position.y > 23) {
             const paddleX = segments[0].position.x;
-            if (this.ball.position.x > paddleX && this.ball.position.x < paddleX + PADDLE_WIDTH ) {
+            const paddleCenter = Math.floor((paddleX + PADDLE_WIDTH) / 2);
+            if (this.ball.position.x >= paddleX && (this.ball.position.x <= paddleX + PADDLE_WIDTH || this.ball.position.x <= (paddleX + PADDLE_WIDTH) % DIMS.X)) {
                 this.ball.dy = -this.ball.dy;
+                if (paddleCenter >= this.ball.position.x) {
+                    this.ball.dx = -this.ball.dx;
+                }
+            } else if (this.ball.position.x + this.ball.dx >= paddleX && this.ball.position.x + this.ball.dx <= paddleX + PADDLE_WIDTH) {
+                this.ball.dy = -this.ball.dy;
+                if (paddleCenter >= this.ball.position.x) {
+                    this.ball.dx = -this.ball.dx;
+                }
             } else {
+                maxAPI.post(`${this.ball.position.x} ${this.ball.position.y} ${paddleX} ${paddleX + PADDLE_WIDTH}`);
                 this.state = STATES.GAME_OVER;
                 this.ball.dy = 0;
                 this.ball.dx = 0;
             }
         }
+
+        if (this.totalBlocks == 0) {
+            this.state = STATES.GAME_OVER;
+        }
     }
 
+    collisionDetection() {
+        for (let c = 0; c < BRICK_NUM_COL; c++) {
+            for (let r = 0; r < BRICK_NUM_ROW; r++) {
+                let b = this.bricks[c][r];
+                if(!b.hit) {
+                    let ball_x = this.ball.position.x;
+                    let ball_y = this.ball.position.y;
+                    let brick_x = b.segments[0].position.x;
+                    let brick_y = b.segments[0].position.y;
+                    if (ball_x > brick_x && ball_x < brick_x + BRICK_NUM_WID && ball_y == brick_y) {
+                        this.ball.dy = -this.ball.dy;
+                        b.hide();
+                        this.totalBlocks -= 1;
+                    } else if (ball_x + this.ball.dx > brick_x && ball_x < brick_x + this.ball.dx + BRICK_NUM_WID && ball_y + this.ball.dy == brick_y) {
+                        this.ball.dy = -this.ball.dy;
+                        b.hide();
+                        this.totalBlocks -= 1;
+                    }
+                }
+            }
+        }
+    }
     _updateGameOver() {
         this.blinkTimer = (this.blinkTimer + 1) % 8;
-        // this.segments.forEach(segment => {
-            // segment.hidden = this.blinkTimer >= 4;
-        // });
         this.ball.hidden = this.blinkTimer >= 4;
     }
 }
 
 class Brick {
     constructor (x, y) {
+        this.hit = false;
         this.segments = [];
         for (let i = 0; i < BRICK_NUM_WID; i++) {
             this.segments.push(new DrawablePixel(x+i,y));
         }
+    }
+
+    hide() {
+        this.hit = true;
+        this.segments.forEach(segment => segment._hidden = true);
     }
 }
 
@@ -164,7 +207,7 @@ class BallSegment extends DrawablePixel {
     constructor (x, y) {
         super(x, y);
         this.dx = 1;
-        this.dy = -2;
+        this.dy = 1;
     }
 
     update(dims) {

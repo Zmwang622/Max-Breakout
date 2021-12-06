@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ -2526.0, -89.0, 1927.0, 1289.0 ],
+		"rect" : [ -2526.0, -89.0, 2492.0, 1289.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -92,8 +92,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 718.644084930419922, 107.630677642822263, 56.0, 22.0 ],
-					"text" : "metro 75"
+					"patching_rect" : [ 718.644084930419922, 107.630677642822263, 63.0, 22.0 ],
+					"text" : "metro 100"
 				}
 
 			}
@@ -529,7 +529,7 @@
 					"numoutlets" : 1,
 					"offset" : [ 0.0, 0.0 ],
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 337.288472919464084, 261.163561201095604, 605.932208299636841, 382.711868286132813 ],
+					"patching_rect" : [ 337.288472919464084, 261.163561201095604, 504.0, 526.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -557,8 +557,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
