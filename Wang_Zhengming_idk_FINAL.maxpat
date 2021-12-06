@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ -2526.0, -89.0, 2492.0, 1289.0 ],
+		"rect" : [ -2526.0, -89.0, 1930.0, 1289.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -39,6 +39,74 @@
 		"subpatcher_template" : "",
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-17",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1354.0, 338.0, 150.0, 34.0 ],
+					"presentation" : 1,
+					"presentation_linecount" : 2,
+					"presentation_rect" : [ 1548.0, 257.0, 150.0, 34.0 ],
+					"text" : "Yes the collisions are quite wonky lol"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-15",
+					"linecount" : 3,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 896.0, 102.0, 150.0, 48.0 ],
+					"presentation" : 1,
+					"presentation_linecount" : 2,
+					"presentation_rect" : [ 896.0, 102.0, 284.0, 34.0 ],
+					"text" : "Then play  Breakout with either the \nL + R arrow keys or A + D!"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-13",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 493.0, 198.0, 150.0, 20.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 493.0, 198.0, 150.0, 20.0 ],
+					"text" : "then hit this"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-11",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 196.0, 229.0, 150.0, 20.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 154.0, 301.0, 150.0, 20.0 ],
+					"text" : "Hit this first"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-4",
+					"linecount" : 11,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 997.0, 663.0, 629.0, 158.0 ],
+					"text" : "Notes - \n\nI found the Snake code online (it's apart of the Node for Max help file) and used it as reference. I wrote comments on the n4m.snake.js file - if you're interested in them I'd be happy to clean it up. The JavaScript files can be opened in any text editor (ex: NotePad++, VSCode), thats where most of the complexity lied.\n\nTo do: need to add audio (lol) and fix some kinks with the program itself. The ball + brick collisions aren't perfect, but that's also a limitation from Max.Thinking about adding a turn based system too.  \n\nThis was a lot of fun but also quite tough - understanding the Snake code alone took ~5 hours. Debugging javascript on Max isn't necessarily the easiest too lol. "
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-64",
 					"maxclass" : "message",
@@ -105,7 +173,9 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 718.644084930419922, 61.016950607299805, 24.0, 24.0 ]
+					"patching_rect" : [ 718.644084930419922, 61.016950607299805, 24.0, 24.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 433.644084930419922, 238.757775163650535, 240.0, 240.0 ]
 				}
 
 			}
@@ -510,7 +580,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "jit_matrix", "" ],
-					"patching_rect" : [ 961.394957146644629, 165.301139688491844, 456.402006573676999, 398.913270950317383 ]
+					"patching_rect" : [ 961.394957146644629, 165.301139688491844, 456.402006573676999, 398.913270950317383 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 737.394957146644629, 150.301139688491844, 743.574462323489342, 649.913270950317383 ]
 				}
 
 			}
@@ -542,6 +614,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 163.250259518623352, 86.500501871109009, 64.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 175.250259518623352, 347.757775163650535, 64.0, 22.0 ],
 					"text" : "script start"
 				}
 
