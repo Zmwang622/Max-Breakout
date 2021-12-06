@@ -1,4 +1,10 @@
-const maxApi = require('max-api');
+const maxAPI = require('max-api');
+
+DIRECTIONS = Object.freeze({
+    NONE: "NONE",
+    LEFT: "LEFT",
+    RIGHT: "RIGHT"
+});
 
 class BreakoutGame {
     initializeGame() {
@@ -8,6 +14,16 @@ class BreakoutGame {
 
 const game = new BreakoutGame();
 
+maxAPI.addHandlers({
+    input: (d) => {
+        if (!DIRECTIONS.hasOwnProperty(d)) {
+            maxAPI.post(`Invalid input to snake game {d}`, maxAPI.POST_LEVELS.WARN);   
+        } else {
+            maxAPI.post(d);
+        }
+    }
+});
+
 game.initializeGame();
 
-maxApi.outlet([3,4,4,4,5,4]);
+maxAPI.outlet([3,4,4,4,5,4]);
