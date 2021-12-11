@@ -10,9 +10,9 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ -2526.0, -89.0, 1930.0, 1289.0 ],
+		"rect" : [ -2527.0, -90.0, 2494.0, 1291.0 ],
 		"bglocked" : 0,
-		"openinpresentation" : 0,
+		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
 		"default_fontface" : 0,
 		"default_fontname" : "Arial",
@@ -40,15 +40,27 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-5",
+					"linecount" : 7,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 341.333343505859375, 644.000019192695618, 150.0, 103.0 ],
+					"text" : "rect~, tri~, filter~\n\n\npad + envelope to turn on and off\nlo-pass, getting rid of top thousands of hertz"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-17",
 					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1354.0, 338.0, 150.0, 34.0 ],
+					"patching_rect" : [ 1437.0, 310.0, 153.0, 34.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
-					"presentation_rect" : [ 1548.0, 257.0, 150.0, 34.0 ],
+					"presentation_rect" : [ 1548.0, 257.0, 153.0, 34.0 ],
 					"text" : "Yes the collisions are quite wonky lol"
 				}
 
@@ -60,7 +72,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 896.0, 102.0, 150.0, 48.0 ],
+					"patching_rect" : [ 790.0, 37.849999999999994, 150.0, 48.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
 					"presentation_rect" : [ 896.0, 102.0, 284.0, 34.0 ],
@@ -101,7 +113,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 997.0, 663.0, 629.0, 158.0 ],
+					"patching_rect" : [ 997.0, 663.0, 630.0, 158.0 ],
 					"text" : "Notes - \n\nI found the Snake code online (it's apart of the Node for Max help file) and used it as reference. I wrote comments on the n4m.snake.js file - if you're interested in them I'd be happy to clean it up. The JavaScript files can be opened in any text editor (ex: NotePad++, VSCode), thats where most of the complexity lied.\n\nTo do: need to add audio (lol) and fix some kinks with the program itself. The ball + brick collisions aren't perfect, but that's also a limitation from Max.Thinking about adding a turn based system too.  \n\nThis was a lot of fun but also quite tough - understanding the Snake code alone took ~5 hours. Debugging javascript on Max isn't necessarily the easiest too lol. "
 				}
 
@@ -601,7 +613,7 @@
 					"numoutlets" : 1,
 					"offset" : [ 0.0, 0.0 ],
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 337.288472919464084, 261.163561201095604, 504.0, 526.0 ],
+					"patching_rect" : [ 337.288472919464084, 261.163561201095604, 400.0, 220.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -631,6 +643,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,

@@ -7,8 +7,9 @@ const INITIAL_PLAT_POSITION = {x: 8, y: 24};
 const INITIAL_BALL_POSITION = {x: 11, y: 12};
 
 // Brick Shit
-const BRICK_NUM_ROW = 3;
-const BRICK_NUM_COL = 4;
+const BRICK_NUM_ROW = 1;
+const BRICK_NUM_COL = 1;
+const TOTAL_BLOCKS = BRICK_NUM_COL * BRICK_NUM_ROW
 const BRICK_NUM_WID = 4;
 const BRICK_NUM_HEIGHT = 1;
 const BRICK_PADDING = 1;
@@ -36,7 +37,6 @@ class BreakoutGame {
         this.state = STATES.PLAYING;
         this.segments = [];
         this.blinkTimer = 0;
-        this.totalBlocks = 12;
 
         for (let i = 0; i < PADDLE_WIDTH; i++) {
             this.segments.push(new PlatformSegment(INITIAL_PLAT_POSITION.x + i, INITIAL_PLAT_POSITION.y));
@@ -107,7 +107,13 @@ class BreakoutGame {
             }
         }
 
-        if (this.totalBlocks == 0) {
+        let numBricksHit = 0;
+        this.bricks.forEach(row => row.forEach(brick => {
+            if(brick.hit) {
+                numBricksHit++;
+            } 
+        }));
+        if (numBricksHit === TOTAL_BLOCKS) {
             this.state = STATES.GAME_OVER;
         }
     }
@@ -124,11 +130,9 @@ class BreakoutGame {
                     if (ball_x > brick_x && ball_x < brick_x + BRICK_NUM_WID && ball_y == brick_y) {
                         this.ball.dy = -this.ball.dy;
                         b.hide();
-                        this.totalBlocks -= 1;
                     } else if (ball_x + this.ball.dx > brick_x && ball_x < brick_x + this.ball.dx + BRICK_NUM_WID && ball_y + this.ball.dy == brick_y) {
                         this.ball.dy = -this.ball.dy;
                         b.hide();
-                        this.totalBlocks -= 1;
                     }
                 }
             }
