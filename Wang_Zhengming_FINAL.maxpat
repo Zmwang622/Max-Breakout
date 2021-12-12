@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ -2526.0, -89.0, 2492.0, 1289.0 ],
+		"rect" : [ -2518.0, -81.0, 1930.0, 1289.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -40,6 +40,34 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"fontsize" : 50.0,
+					"id" : "obj-28",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1050.0, 89.0, 573.0, 64.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 944.682188308389414, 84.301139688491844, 329.0, 64.0 ],
+					"text" : "Max Breakout"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontsize" : 26.0,
+					"id" : "obj-20",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 472.0, 721.0, 308.0, 36.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 238.067556381225586, 370.757775163650535, 172.0, 36.0 ],
+					"text" : "Turn Music on"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-54",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -56,7 +84,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ -2518.0, -81.0, 2492.0, 1289.0 ],
+						"rect" : [ -1245.0, -81.0, 1210.0, 1280.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -84,7 +112,6 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-6",
@@ -117,7 +144,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "signal" ],
 									"patching_rect" : [ 180.0, 681.0, 40.0, 22.0 ],
-									"text" : "*~ 0.3"
+									"text" : "*~ 0.5"
 								}
 
 							}
@@ -459,7 +486,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "signal" ],
 									"patching_rect" : [ 180.0, 681.0, 40.0, 22.0 ],
-									"text" : "*~ 0.3"
+									"text" : "*~ 0.5"
 								}
 
 							}
@@ -789,7 +816,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "signal" ],
 									"patching_rect" : [ 180.0, 681.0, 40.0, 22.0 ],
-									"text" : "*~ 0.3"
+									"text" : "*~ 0.5"
 								}
 
 							}
@@ -1192,7 +1219,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "signal" ],
 									"patching_rect" : [ 180.0, 681.0, 40.0, 22.0 ],
-									"text" : "*~ 0.5"
+									"text" : "*~ 0.7"
 								}
 
 							}
@@ -1668,7 +1695,9 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 167.567556381225586, 39.189186573028564, 24.0, 24.0 ]
+					"patching_rect" : [ 167.567556381225586, 39.189186573028564, 24.0, 24.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 267.567556381225586, 257.0, 113.0, 113.0 ]
 				}
 
 			}
@@ -1774,7 +1803,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "signal" ],
 									"patching_rect" : [ 185.25, 681.0, 40.0, 22.0 ],
-									"text" : "*~ 0.5"
+									"text" : "*~ 0.7"
 								}
 
 							}
@@ -2256,7 +2285,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 453.607443175315836, 751.317216787338225, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 453.607443175315836, 751.317216787338225, 24.0, 24.0 ]
+					"presentation_rect" : [ 267.567556381225586, 408.757775163650535, 113.0, 113.0 ]
 				}
 
 			}
@@ -2448,7 +2477,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "signal" ],
 									"patching_rect" : [ 180.0, 681.0, 40.0, 22.0 ],
-									"text" : "*~ 0.5"
+									"text" : "*~ 0.7"
 								}
 
 							}
@@ -2915,18 +2944,6 @@
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-5",
-					"linecount" : 7,
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 702.814813137054443, 584.000021159648895, 150.0, 103.0 ],
-					"text" : "rect~, tri~, filter~\n\n\npad + envelope to turn on and off\nlo-pass, getting rid of top thousands of hertz"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-17",
 					"linecount" : 2,
 					"maxclass" : "comment",
@@ -2935,49 +2952,55 @@
 					"patching_rect" : [ 1749.0, 296.0, 153.0, 34.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
-					"presentation_rect" : [ 1548.0, 257.0, 153.0, 34.0 ],
-					"text" : "Yes the collisions are quite wonky lol"
+					"presentation_rect" : [ 1498.0, 448.257775163650535, 153.0, 34.0 ],
+					"text" : "Yes the collisions are not perfect lolol"
 				}
 
 			}
 , 			{
 				"box" : 				{
+					"fontsize" : 26.0,
 					"id" : "obj-15",
-					"linecount" : 3,
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1008.0, 13.849999999999994, 150.0, 48.0 ],
+					"patching_rect" : [ 1008.0, 13.849999999999994, 316.0, 66.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 2,
-					"presentation_rect" : [ 896.0, 102.0, 284.0, 34.0 ],
-					"text" : "Then play  Breakout with either the \nL + R arrow keys or A + D!"
+					"presentation_rect" : [ 809.969419470134198, 807.0, 559.0, 36.0 ],
+					"text" : "Play with either the L + R arrow keys or A + D!"
 				}
 
 			}
 , 			{
 				"box" : 				{
+					"fontsize" : 26.0,
 					"id" : "obj-13",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 521.358207941055298, 73.604549727439803, 150.0, 20.0 ],
+					"patching_rect" : [ 521.358207941055298, 73.604549727439803, 303.0, 36.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 493.0, 198.0, 150.0, 20.0 ],
-					"text" : "then hit this"
+					"presentation_linecount" : 2,
+					"presentation_rect" : [ 446.022972512245133, 188.757775163650535, 224.0, 66.0 ],
+					"text" : "Pause/Unpause Game",
+					"textjustification" : 1
 				}
 
 			}
 , 			{
 				"box" : 				{
+					"fontsize" : 26.0,
 					"id" : "obj-11",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 457.194020509719849, 42.432842493057251, 150.0, 20.0 ],
+					"patching_rect" : [ 457.194020509719849, 42.432842493057251, 303.0, 36.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 154.0, 301.0, 150.0, 20.0 ],
-					"text" : "Hit this first"
+					"presentation_linecount" : 2,
+					"presentation_rect" : [ 243.567556381225586, 189.0, 161.0, 66.0 ],
+					"text" : "Start the Game",
+					"textjustification" : 1
 				}
 
 			}
@@ -3039,7 +3062,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 936.644084930419922, 37.016950607299805, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 433.644084930419922, 238.757775163650535, 240.0, 240.0 ]
+					"presentation_rect" : [ 425.644084930419922, 257.0, 264.757775163650535, 264.757775163650535 ]
 				}
 
 			}
@@ -3478,8 +3501,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 163.250259518623352, 86.500501871109009, 64.0, 22.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 175.250259518623352, 347.757775163650535, 64.0, 22.0 ],
 					"text" : "script start"
 				}
 
@@ -3495,6 +3516,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,

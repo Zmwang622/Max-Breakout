@@ -7,8 +7,8 @@ const INITIAL_PLAT_POSITION = {x: 8, y: 24};
 const INITIAL_BALL_POSITION = {x: 11, y: 12};
 
 // Brick Shit
-const BRICK_NUM_ROW = 4;
-const BRICK_NUM_COL = 3;
+const BRICK_NUM_ROW = 2;
+const BRICK_NUM_COL = 4;
 const TOTAL_BLOCKS = BRICK_NUM_COL * BRICK_NUM_ROW
 const BRICK_NUM_WID = 4;
 const BRICK_NUM_HEIGHT = 1;
@@ -86,24 +86,23 @@ class BreakoutGame {
         this.ball.update(this.dims);
         this.collisionDetection();
 
-        // if (this.ball.position.y + this.ball.dy > this.dims.y - BALL_RADIUS) {
         if (this.ball.position.y > 23) {
             const paddleX = segments[0].position.x;
-            const paddleCenter = Math.floor((paddleX + PADDLE_WIDTH) / 2);
-            if (this.ball.position.x >= paddleX && (this.ball.position.x <= paddleX + PADDLE_WIDTH || this.ball.position.x <= (paddleX + PADDLE_WIDTH) % DIMS.X)) {
+            const paddleLeft = paddleX + PADDLE_WIDTH;
+            const paddlePeek = (paddleX + PADDLE_WIDTH) % DIMS.x;
+            if (this.ball.position.x >= paddleX && this.ball.position.x <= paddleLeft) {
                 this.ball.dy = -this.ball.dy;
-                if (paddleCenter <= this.ball.position.x) {
+                if (Math.random() < 0.5) {
                     this.ball.dx = -this.ball.dx;
                 }
                 maxAPI.outlet("paddleHit");
-            } else if (this.ball.position.x + this.ball.dx >= paddleX && this.ball.position.x + this.ball.dx <= paddleX + PADDLE_WIDTH) {
+            } else if (this.ball.position.x <= paddlePeek && paddlePeek < paddleX) {
                 this.ball.dy = -this.ball.dy;
-                if (paddleCenter <= this.ball.position.x) {
+                if (Math.random() < 0.5) {
                     this.ball.dx = -this.ball.dx;
                 }
                 maxAPI.outlet("paddleHit");
             } else {
-                // maxAPI.post(`${this.ball.position.x} ${this.ball.position.y} ${paddleX} ${paddleX + PADDLE_WIDTH}`);
                 this.state = STATES.GAME_OVER;
                 this.ball.dy = 0;
                 this.ball.dx = 0;
@@ -132,11 +131,11 @@ class BreakoutGame {
                     let ball_y = this.ball.position.y;
                     let brick_x = b.segments[0].position.x;
                     let brick_y = b.segments[0].position.y;
-                    if (ball_x > brick_x && ball_x < brick_x + BRICK_NUM_WID && ball_y == brick_y) {
+                    if (ball_x >= brick_x && ball_x <= brick_x + BRICK_NUM_WID && ball_y === brick_y) {
                         this.ball.dy = -this.ball.dy;
                         maxAPI.outlet("brickHit");
                         b.hide();
-                    } else if (ball_x + this.ball.dx > brick_x && ball_x < brick_x + this.ball.dx + BRICK_NUM_WID && ball_y + this.ball.dy == brick_y) {
+                    } else if (ball_x + this.ball.dx >= brick_x && ball_x <= brick_x + this.ball.dx + BRICK_NUM_WID && ball_y + this.ball.dy === brick_y) {
                         this.ball.dy = -this.ball.dy;
                         maxAPI.outlet("brickHit");
                         b.hide();
@@ -144,6 +143,7 @@ class BreakoutGame {
                 }
             }
         }
+        this.bricks = this.bricks.filter(brick => !brick.hit);
     }
     _updateGameOver() {
         this.blinkTimer = (this.blinkTimer + 1) % 8;
