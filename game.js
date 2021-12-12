@@ -7,8 +7,8 @@ const INITIAL_PLAT_POSITION = {x: 8, y: 24};
 const INITIAL_BALL_POSITION = {x: 11, y: 12};
 
 // Brick Shit
-const BRICK_NUM_ROW = 1;
-const BRICK_NUM_COL = 1;
+const BRICK_NUM_ROW = 4;
+const BRICK_NUM_COL = 3;
 const TOTAL_BLOCKS = BRICK_NUM_COL * BRICK_NUM_ROW
 const BRICK_NUM_WID = 4;
 const BRICK_NUM_HEIGHT = 1;
@@ -44,6 +44,7 @@ class BreakoutGame {
 
         this.addBall();
         this.addBricks();
+        maxAPI.outlet("breakoutTheme");
     }
 
     getPixels() {
@@ -94,16 +95,19 @@ class BreakoutGame {
                 if (paddleCenter <= this.ball.position.x) {
                     this.ball.dx = -this.ball.dx;
                 }
+                maxAPI.outlet("paddleHit");
             } else if (this.ball.position.x + this.ball.dx >= paddleX && this.ball.position.x + this.ball.dx <= paddleX + PADDLE_WIDTH) {
                 this.ball.dy = -this.ball.dy;
                 if (paddleCenter <= this.ball.position.x) {
                     this.ball.dx = -this.ball.dx;
                 }
+                maxAPI.outlet("paddleHit");
             } else {
-                maxAPI.post(`${this.ball.position.x} ${this.ball.position.y} ${paddleX} ${paddleX + PADDLE_WIDTH}`);
+                // maxAPI.post(`${this.ball.position.x} ${this.ball.position.y} ${paddleX} ${paddleX + PADDLE_WIDTH}`);
                 this.state = STATES.GAME_OVER;
                 this.ball.dy = 0;
                 this.ball.dx = 0;
+                maxAPI.outlet("gameOver");
             }
         }
 
@@ -115,6 +119,7 @@ class BreakoutGame {
         }));
         if (numBricksHit === TOTAL_BLOCKS) {
             this.state = STATES.GAME_OVER;
+            maxAPI.outlet("gameWon");
         }
     }
 
@@ -129,9 +134,11 @@ class BreakoutGame {
                     let brick_y = b.segments[0].position.y;
                     if (ball_x > brick_x && ball_x < brick_x + BRICK_NUM_WID && ball_y == brick_y) {
                         this.ball.dy = -this.ball.dy;
+                        maxAPI.outlet("brickHit");
                         b.hide();
                     } else if (ball_x + this.ball.dx > brick_x && ball_x < brick_x + this.ball.dx + BRICK_NUM_WID && ball_y + this.ball.dy == brick_y) {
                         this.ball.dy = -this.ball.dy;
+                        maxAPI.outlet("brickHit");
                         b.hide();
                     }
                 }
@@ -217,10 +224,12 @@ class BallSegment extends DrawablePixel {
     update(dims) {
         if ((this.position.x + this.dx) < 0 || 
                 this.position.x + this.dx > dims.x - BALL_RADIUS) {
+            maxAPI.outlet("wallHit");
             this.dx = -this.dx;
         }
 
         if (this.position.y + this.dy < 0) {
+            maxAPI.outlet("wallHit");
             this.dy = -this.dy;
         } 
         
